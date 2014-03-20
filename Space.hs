@@ -2,6 +2,9 @@ module Space where
 
 --------------------------------------------------------------------------------
 
+-- a sequence Seq is like a (finite) list. It is a pair of the size of the
+-- list, and the function we can use to index in it
+
 type Seq a = (Integer, Integer -> a)
 
 single :: a -> Seq a
@@ -15,6 +18,9 @@ combine ((n1,h1):ps) = (n1+n2, \i -> if i < n1 then h1 i else h2 (i-n1))
   (n2,h2) = combine ps
 
 --------------------------------------------------------------------------------
+
+-- a space is a collection of sequences, one such sequence for each size. We can
+-- use the pay function to control size.
 
 type Space a = Int -> Seq a
 
