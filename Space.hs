@@ -40,7 +40,6 @@ unit :: a -> Space a
 unit x = [single x]
 
 (+++) :: Space a -> Space a -> Space a
-[]     +++ []     = []
 xs     +++ []     = xs
 []     +++ ys     = ys
 (x:xs) +++ (y:ys) = (x +!+ y) : (xs +++ ys)
