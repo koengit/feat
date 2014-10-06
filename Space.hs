@@ -77,6 +77,23 @@ list x = list_x
 
 --------------------------------------------------------------------------------
 
+data Exp
+  = Var Int
+  | App Exp Exp
+  | Lam Exp
+ deriving ( Eq, Show )
+
+expr :: Int -> Space Exp
+expr k = expk
+ where
+  expk =
+    pay ( foldr (+++) empty [ unit (Var i) | i <- [1..k] ]
+      +++ (unit App `app` expk `app` expk)
+      +++ (unit Lam `app` expr (k+1))
+        )
+
+--------------------------------------------------------------------------------
+
 showSpace :: Show a => Space a -> String
 showSpace v = "{" ++ concat (intersperse "," [ show s ++ ":" ++ showSeq p | (p@(n,_),s) <- v `zip` [0..], n > 0 ]) ++ "}"
 
